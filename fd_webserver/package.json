@@ -36,7 +36,7 @@
         "resolve-url-loader": "^2.0.2",
         "sass-loader": "^6.0.3",
         "style-loader": "^0.17.0",
-        "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony",
+        "uglify-js": "^2.8.0",
         "uglifyjs-webpack-plugin": "^0.4.3",
         "url-loader": "^0.5.8",
         "webpack": "^2.4.1",
@@ -54,7 +54,7 @@
     "name": "fd_webserver",
     "repository": {
         "type": "git",
-        "url": "git://github.com/LCAS/teaching.git"
+        "url": "https://github.com/LCAS/fast_downward_server.git"
     },
     "version": "1.2.0"
 }

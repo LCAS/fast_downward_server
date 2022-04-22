@@ -9,7 +9,8 @@ import sys
 from .plan_manager import PlanManager
 
 
-DRIVER_DIR = os.path.abspath('/opt/ros/indigo/lib/catkinized_downward') #os.path.abspath(os.path.dirname(__file__))
+DRIVER_DIR = os.path.abspath('/downward_planner/install/lib/catkinized_downward') #os.path.abspath(os.path.dirname(__file__))
+#DRIVER_DIR = os.path.abspath('/opt/ros/indigo/lib/catkinized_downward') #os.path.abspath(os.path.dirname(__file__))
 SRC_DIR = DRIVER_DIR
 TRANSLATE = os.path.join(SRC_DIR, "translate", "translate.py")
 PREPROCESS = os.path.join(SRC_DIR, "preprocess", "preprocess")
