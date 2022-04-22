@@ -1,18 +1,31 @@
 from flask import Flask, render_template, request, jsonify, Blueprint
-from subprocess import CalledProcessError
 import __future__
+from subprocess import check_output, CalledProcessError, STDOUT
+import sys
+from tempfile import mkdtemp, mktemp
+from shutil import rmtree
+from os import path
 
 app = Flask(__name__, template_folder="resources/templates")
 bp = Blueprint('fd_webserver', __name__, static_folder='static')
 
+def call_cmd(cmd, args, cwd, stdin=None, timeout=30):
+    if not path.exists(cmd):
+        raise IOError(
+            "Could not find %s." %
+            (cmd))
+    sys.stdout.flush()
+    if stdin:
+        with open(stdin) as stdin_file:
+            return check_output([cmd] + args, cwd=cwd, stdin=stdin_file, stderr=STDOUT, timeout=timeout)
+    else:
+        return check_output([cmd] + args, cwd=cwd, stderr=STDOUT, timeout=timeout)
+
+
 def call_planner(domain, problem):
-
-    from driver.main import main
-    from tempfile import mkdtemp
-    from shutil import rmtree
-    from os import path
-
     tmpdir = mkdtemp()
+
+    planner_cmd = '/workspace/downward/fast-downward.py'
 
     domain_file = path.join(tmpdir, 'domain.pddl')
     problem_file = path.join(tmpdir, 'problem.pddl')
@@ -26,7 +39,7 @@ def call_planner(domain, problem):
         text_file.write(problem)
 
     try:
-        log = main(["--plan-file", plan_file, "--cwd", tmpdir, problem_file, "--search", "astar(ff)"])
+        log = call_cmd(planner_cmd, ["--plan-file", plan_file, problem_file, "--search", "astar(ff)"], tmpdir, timeout=10)
         with open(plan_file, "r") as text_file:
             p = text_file.read()
         return log, p
@@ -59,7 +72,7 @@ def index(name=None):
         domain = request.form['domain']
         problem = request.form['problem']
         sout, plan = call_planner(domain, problem)
-        return jsonify(sout=sout, plan=plan)
+        return jsonify(sout=sout.decode("utf-8").replace('\\n', '&#13;&#10;'), plan=str(plan))
     else:
         domain = request.args.get('domain', '')
         problem = request.args.get('problem', '')
