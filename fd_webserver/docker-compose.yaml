@@ -1,16 +1,15 @@
 version: '3.4'
 services:
   fd_server:
-    image: lcasuol/fd_server:latest
+    image: lcas.lincoln.ac.uk/lcas/fd_server:latest
     build: 
       context: ..
       dockerfile: fd_webserver/Dockerfile
       network: host
     environment:
       - BASE_URL=http://lcas.lincoln.ac.uk/fast-downward/
-    command: python -u app.py
     ports:
       - "5000:5000"
-    volumes:
-      - .:/fastdownward
+#    volumes:
+#      - ./app.py:/fastdownward/app.py
 
