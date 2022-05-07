@@ -1,6 +1,7 @@
 version: '3.4'
 services:
   fd_server:
+    restart: unless-stopped
     image: lcas.lincoln.ac.uk/lcas/fd_server:latest
     build: 
       context: ..
