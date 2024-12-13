@@ -21,7 +21,7 @@
         }
     ],
     "dependencies": {
-        "bootstrap-sass": "^3.3.7",
+        "bootstrap-sass": "^3.4.1",
         "clean-webpack-plugin": "^0.1.16",
         "codemirror": "^5.25.2",
         "copy-webpack-plugin": "^4.0.1",
