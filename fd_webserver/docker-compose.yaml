@@ -1,4 +1,4 @@
-version: '3.4'
+---
 services:
   fd_server:
     restart: unless-stopped
@@ -11,6 +11,14 @@ services:
       - BASE_URL=http://lcas.lincoln.ac.uk/fast-downward/
     ports:
       - "5000:5000"
+    deploy:
+      resources:
+        limits:
+          memory: 4096M
+
+
+
+
 #    volumes:
 #      - ./app.py:/fastdownward/app.py
 
